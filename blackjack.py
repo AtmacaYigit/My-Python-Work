@@ -35,11 +35,11 @@ def play_game():
     print(f"Player's hand: {player_hand}, value: {get_hand_value(player_hand)}")
     print(f"Dealer's hand: {dealer_hand[0]}")
     while get_hand_value(player_hand) <= 21:
-        action = input("Do you want to hit or stand? ")
-        if action.lower() == "hit":
+        action = input("Do you want to hit or stand (h or s) ? ")
+        if action.lower() == "h":
             player_hand.append(deck.pop())
             print(f"Player's hand: {player_hand}, value: {get_hand_value(player_hand)}")
-        else:
+        elif action.lower() == "s":
             break
     while get_hand_value(dealer_hand) < 17:
         dealer_hand.append(deck.pop())
@@ -49,10 +49,19 @@ def play_game():
         print("You lose.")
     elif get_hand_value(dealer_hand) > 21:
         print("You win!")
+    
+    elif get_hand_value(player_hand) == 21:
+        print("You win")
+
+    elif get_hand_value(dealer_hand) == 21:
+        print("You lose.")
+    
     elif get_hand_value(player_hand) > get_hand_value(dealer_hand):
         print("You win!")
+    
     elif get_hand_value(player_hand) < get_hand_value(dealer_hand):
         print("You lose.")
+    
     else:
         print("Draw.")
 
