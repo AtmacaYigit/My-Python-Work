@@ -34,7 +34,7 @@ def play_game():
     dealer_hand = [deck.pop(), deck.pop()]
     print(f"Player's hand: {player_hand}, value: {get_hand_value(player_hand)}")
     print(f"Dealer's hand: {dealer_hand[0]}")
-    while get_hand_value(player_hand) <= 21:
+    while get_hand_value(player_hand) < 21:
         action = input("Do you want to hit or stand (h or s) ? ")
         if action.lower() == "h":
             player_hand.append(deck.pop())
