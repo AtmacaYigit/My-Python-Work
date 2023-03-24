@@ -1,68 +1,59 @@
 import random
 
-def get_card_value(card):
-    if card == 'A':
-        return 11
-    elif card in ['K', 'Q', 'J']:
-        return 10
-    else:
-        return int(card)
+deck = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K',
+    'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K',
+    'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K',
+    'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']
 
-def get_hand_value(hand):
-    value = 0
-    num_aces = 0
-    for card in hand:
-        card_value = get_card_value(card)
-        value += card_value
-        if card == 'A':
-            num_aces += 1
-    while num_aces > 0 and value > 21:
-        value -= 10
-        num_aces -= 1
-    return value
+card_values = {'A': 11, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9, '10': 10, 'J': 10, 'Q': 10, 'K': 10}
 
-def get_new_deck():
-    deck = []
-    for rank in ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']:
-        deck.append(rank)
-    random.shuffle(deck)
-    return deck
+def calculate_hand(hand):
+    total_value = sum(card_values[card] for card in hand)
+    if 'A' in hand and total_value > 21:
+        total_value -= 10
+        return total_value
+
+
+def deal_card():
+    return deck.pop()
 
 def play_game():
-    deck = get_new_deck()
-    player_hand = [deck.pop(), deck.pop()]
-    dealer_hand = [deck.pop(), deck.pop()]
-    print(f"Player's hand: {player_hand}, value: {get_hand_value(player_hand)}")
-    print(f"Dealer's hand: {dealer_hand[0]}")
-    while get_hand_value(player_hand) < 21:
-        action = input("Do you want to hit or stand (h or s) ? ")
-        if action.lower() == "h":
-            player_hand.append(deck.pop())
-            print(f"Player's hand: {player_hand}, value: {get_hand_value(player_hand)}")
-        elif action.lower() == "s":
-            break
-    while get_hand_value(dealer_hand) < 17:
-        dealer_hand.append(deck.pop())
-    print(f"Player's hand: {player_hand}, value: {get_hand_value(player_hand)}")
-    print(f"Dealer's hand: {dealer_hand}, value: {get_hand_value(dealer_hand)}")
-    if get_hand_value(player_hand) > 21:
-        print("You lose.")
-    elif get_hand_value(dealer_hand) > 21:
-        print("You win!")
-    
-    elif get_hand_value(player_hand) == 21:
-        print("You win")
+    random.shuffle(deck)
 
-    elif get_hand_value(dealer_hand) == 21:
-        print("You lose.")
+    player_hand = [deal_card(), deal_card()]
+    dealer_hand = [deal_card(), deal_card()]
     
-    elif get_hand_value(player_hand) > get_hand_value(dealer_hand):
+    print("Your hand: ", player_hand, calculate_hand(player_hand))
+    print(f"Dealer's hand: ['{dealer_hand[0]}' '?'] "calculate_hand(dealer_hand)))
+
+    while True:
+        action = input("Do you want to hit or stand (h or s) ? ")
+        if action.lower() == 'h':
+            player_hand.append(deal_card())
+            print("Your hand: ", player_hand)
+            
+            if calculate_hand(player_hand) > 21:
+                print("Total card value exceeds 21. You lose!")
+        elif action.lower() == 'stand':
+            break
+        else:
+            print("Invalid action, please enter 'h' or 's'")
+
+    while calculate_hand(dealer_hand) < 17:
+        dealer_hand.append(deal_card())
+    print("Dealer's hand: ", dealer_hand)
+    
+    if calculate_hand(dealer_hand) > 21:
+        print("Dealer's total card value exceeds 21. You win!")
+
+    player_total = calculate_hand(player_hand)
+    dealer_total = calculate_hand(dealer_hand)
+    
+    if player_total > dealer_total:
         print("You win!")
-    
-    elif get_hand_value(player_hand) < get_hand_value(dealer_hand):
-        print("You lose.")
-    
+    elif dealer_total > player_total:
+        print("Dealer won!")
     else:
-        print("Draw.")
+        print("Draw!")
 
 play_game()
