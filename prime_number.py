@@ -1,14 +1,16 @@
-sayi = int(input("Sayıyı girin: "))
+sayi = int(input('Sayıyı girin: '))
+asalmi = True
 
 if sayi == 1:
-    print("1 asal değildir")
-elif sayi  %2 == 0:
-    print("Sayı asal değil")
-elif sayi  %3 == 0:
-    print("Sayı asal değil")
-elif sayi  %5 == 0:
-    print("Sayı asal değil")
-elif sayi  %7 == 0:
-    print("Sayı asal değil")
+    asalmi = False
+
+for i in range(2, sayi):
+    if (sayi % i == 0):
+        asalmi = False
+        break
+
+if asalmi:
+    print('sayı asaldır.')
 else:
-    print("Sayı asal")
+    print('sayı asal değildir.')
+ 
