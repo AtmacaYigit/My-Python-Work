@@ -13,4 +13,3 @@ if asalmi:
     print('sayı asaldır.')
 else:
     print('sayı asal değildir.')
- 
