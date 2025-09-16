@@ -1,6 +1,6 @@
 number = int(input("Sayıyı girin: "))
 
-def bolenleribul(sayi): #Verilen sayının tam bölenleri bulmayı sağlamak amaçlandı.
+def bolenleribul(sayi): #Verilen sayının tam bölenleri bulmayı sağlamak amaçlandı
     bolenler = []
 
     for i in range (2, sayi+1):
